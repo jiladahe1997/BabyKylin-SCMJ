@@ -8,30 +8,46 @@ var userMgr = require('./usermgr');
 var http = require('../utils/http');
 var io = null;
 
-var app = express();
+// var app = require("express")();
 
 //设置跨域访问
-app.all('*', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-    res.header("X-Powered-By",' 3.2.1')
-    res.header("Content-Type", "application/json;charset=utf-8");
-	http.send(res,0,"ok",{});
-});
+// app.all('*', function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+//     res.header("X-Powered-By",' 3.2.1')
+//     res.header("Content-Type", "application/json;charset=utf-8");
+// 	http.send(res,0,"ok",{});
+// });
 
 var config = null;
 
 exports.start = function(conf,mgr){
 	config = conf;
-	
-	var httpServer = require('http').createServer(app);
-	io = require('socket.io')(httpServer);
-	httpServer.listen(config.CLIENT_PORT);
-	
+	const app = require("express")();
+	app.all('*', function(req, res, next) {
+		res.header("Access-Control-Allow-Origin", "*");
+		res.header("Access-Control-Allow-Headers", "X-Requested-With");
+		res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+		res.header("X-Powered-By",' 3.2.1')
+		res.header("Content-Type", "application/json;charset=utf-8");
+		http.send(res,0,"ok",{});
+	});
+	const httpServer = require("http").createServer(app);
+	const options = {
+		cors: {
+		  origin: "http://localhost:7456"
+		}
+	  }
+	const io = require("socket.io")(httpServer, {
+		cors: {
+		  origin: '*',
+		}
+	  });
 	io.sockets.on('connection',function(socket){
-		socket.on('login',function(data){
-			data = JSON.parse(data);
+		socket.on('login',function(...args){
+			data=args[0]
+			data = JSON.parse(data)
 			if(socket.userId != null){
 				//已经登陆过的就忽略
 				return;
@@ -140,7 +156,8 @@ exports.start = function(conf,mgr){
 			}
 		});
 
-		socket.on('ready',function(data){
+		socket.on('ready',function(...args){
+			data=args[0]
 			var userId = socket.userId;
 			if(userId == null){
 				return;
@@ -150,7 +167,8 @@ exports.start = function(conf,mgr){
 		});
 
 		//换牌
-		socket.on('huanpai',function(data){
+		socket.on('huanpai',function(...args){
+			data=args[0]
 			if(socket.userId == null){
 				return;
 			}
@@ -173,7 +191,8 @@ exports.start = function(conf,mgr){
 		});
 
 		//定缺
-		socket.on('dingque',function(data){
+		socket.on('dingque',function(...args){
+			data=args[0]
 			if(socket.userId == null){
 				return;
 			}
@@ -182,7 +201,8 @@ exports.start = function(conf,mgr){
 		});
 
 		//出牌
-		socket.on('chupai',function(data){
+		socket.on('chupai',function(...args){
+			data=args[0]
 			if(socket.userId == null){
 				return;
 			}
@@ -191,7 +211,8 @@ exports.start = function(conf,mgr){
 		});
 		
 		//碰
-		socket.on('peng',function(data){
+		socket.on('peng',function(...args){
+			data=args[0]
 			if(socket.userId == null){
 				return;
 			}
@@ -199,7 +220,8 @@ exports.start = function(conf,mgr){
 		});
 		
 		//杠
-		socket.on('gang',function(data){
+		socket.on('gang',function(...args){
+			data=args[0]
 			if(socket.userId == null || data == null){
 				return;
 			}
@@ -218,7 +240,8 @@ exports.start = function(conf,mgr){
 		});
 		
 		//胡
-		socket.on('hu',function(data){
+		socket.on('hu',function(...args){
+			data=args[0]
 			if(socket.userId == null){
 				return;
 			}
@@ -226,7 +249,8 @@ exports.start = function(conf,mgr){
 		});
 
 		//过  遇上胡，碰，杠的时候，可以选择过
-		socket.on('guo',function(data){
+		socket.on('guo',function(...args){
+			data=args[0]
 			if(socket.userId == null){
 				return;
 			}
@@ -234,7 +258,8 @@ exports.start = function(conf,mgr){
 		});
 		
 		//聊天
-		socket.on('chat',function(data){
+		socket.on('chat',function(...args){
+			data=args[0]
 			if(socket.userId == null){
 				return;
 			}
@@ -243,7 +268,8 @@ exports.start = function(conf,mgr){
 		});
 		
 		//快速聊天
-		socket.on('quick_chat',function(data){
+		socket.on('quick_chat',function(...args){
+			data=args[0]
 			if(socket.userId == null){
 				return;
 			}
@@ -252,7 +278,8 @@ exports.start = function(conf,mgr){
 		});
 		
 		//语音聊天
-		socket.on('voice_msg',function(data){
+		socket.on('voice_msg',function(...args){
+			data=args[0]
 			if(socket.userId == null){
 				return;
 			}
@@ -261,7 +288,8 @@ exports.start = function(conf,mgr){
 		});
 		
 		//表情
-		socket.on('emoji',function(data){
+		socket.on('emoji',function(...args){
+			data=args[0]
 			if(socket.userId == null){
 				return;
 			}
@@ -272,7 +300,8 @@ exports.start = function(conf,mgr){
 		//语音使用SDK不出现在这里
 		
 		//退出房间
-		socket.on('exit',function(data){
+		socket.on('exit',function(...args){
+			data=args[0]
 			var userId = socket.userId;
 			if(userId == null){
 				return;
@@ -304,7 +333,8 @@ exports.start = function(conf,mgr){
 		});
 		
 		//解散房间
-		socket.on('dispress',function(data){
+		socket.on('dispress',function(...args){
+			data=args[0]
 			var userId = socket.userId;
 			if(userId == null){
 				return;
@@ -332,7 +362,8 @@ exports.start = function(conf,mgr){
 		});
 
 		//解散房间
-		socket.on('dissolve_request',function(data){
+		socket.on('dissolve_request',function(...args){
+			data=args[0]
 			var userId = socket.userId;
 			console.log(1);
 			if(userId == null){
@@ -366,7 +397,8 @@ exports.start = function(conf,mgr){
 			console.log(6);
 		});
 
-		socket.on('dissolve_agree',function(data){
+		socket.on('dissolve_agree',function(...args){
+			data=args[0]
 			var userId = socket.userId;
 
 			if(userId == null){
@@ -402,7 +434,8 @@ exports.start = function(conf,mgr){
 			}
 		});
 
-		socket.on('dissolve_reject',function(data){
+		socket.on('dissolve_reject',function(...args){
+			data=args[0]
 			var userId = socket.userId;
 
 			if(userId == null){
@@ -421,7 +454,8 @@ exports.start = function(conf,mgr){
 		});
 
 		//断开链接
-		socket.on('disconnect',function(data){
+		socket.on('disconnect',function(...args){
+			data=args[0]
 			var userId = socket.userId;
 			if(!userId){
 				return;
@@ -445,7 +479,8 @@ exports.start = function(conf,mgr){
 			socket.userId = null;
 		});
 		
-		socket.on('game_ping',function(data){
+		socket.on('game_ping',function(...args){
+			data=args[0]
 			var userId = socket.userId;
 			if(!userId){
 				return;
@@ -454,6 +489,7 @@ exports.start = function(conf,mgr){
 			socket.emit('game_pong');
 		});
 	});
+	httpServer.listen(config.CLIENT_PORT);
 
 	console.log("game server is listening on " + config.CLIENT_PORT);	
 };
