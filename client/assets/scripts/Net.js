@@ -1,6 +1,7 @@
-if(window.io == null){
-    window.io = require("socket-io");
-}
+// if(window.io == null){
+//     const { io } = require("socket.io-client");
+//     window.io = io;
+// }
  
 var Global = cc.Class({
     extends: cc.Component,
@@ -32,17 +33,14 @@ var Global = cc.Class({
         },
         connect:function(fnConnect,fnError) {
             var self = this;
-            
-            var opts = {
-                'reconnection':false,
-                'force new connection': true,
-                'transports':['websocket', 'polling']
-            }
-            this.sio = window.io.connect(this.ip,opts);
+            const { io } = require("socket.io-client");
+            const socket = io("http://8.217.123.219:10000");
+            this.sio = socket;
             this.sio.on('reconnect',function(){
                 console.log('reconnection');
             });
             this.sio.on('connect',function(data){
+                console.log("rmr connect succ http://8.217.123.219:10000")
                 self.sio.connected = true;
                 fnConnect(data);
             });
