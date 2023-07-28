@@ -1,4 +1,4 @@
-﻿var HALL_IP = "8.217.123.219";
+﻿var HALL_IP = "jiladahe1997.cn";
 var HALL_CLIENT_PORT = 9001;
 var HALL_ROOM_PORT = 9002;
 
