@@ -5,7 +5,8 @@
     "pathPattern": "",
     "recordPath": "",
     "scheme": "https",
-    "skipRecord": false
+    "skipRecord": false,
+    "packageName": "org.cocos2d.demo"
   },
   "appKey": "",
   "appSecret": "",
@@ -33,7 +34,7 @@
     "REMOTE_SERVER_ROOT": "",
     "orientation": "portrait"
   },
-  "startScene": "7898c3aa-75db-4523-8b22-e60bf7d83784",
+  "startScene": "1e54059d-dc28-4c1c-ab6a-9c2efa2d9e39",
   "title": "SCMJ",
   "webOrientation": "landscape",
   "wechatgame": {
@@ -43,5 +44,30 @@
     "subContext": ""
   },
   "xxteaKey": "a56d41f1-8905-45",
-  "zipCompressJs": true
+  "zipCompressJs": true,
+  "mainCompressionType": "default",
+  "mainIsRemote": false,
+  "nativeMd5Cache": true,
+  "android": {
+    "packageName": "org.cocos2d.demo",
+    "REMOTE_SERVER_ROOT": ""
+  },
+  "ios": {
+    "packageName": "org.cocos2d.demo",
+    "REMOTE_SERVER_ROOT": "",
+    "ios_enable_jit": true
+  },
+  "mac": {
+    "packageName": "org.cocos2d.demo",
+    "REMOTE_SERVER_ROOT": "",
+    "width": 1280,
+    "height": 720
+  },
+  "win32": {
+    "REMOTE_SERVER_ROOT": "",
+    "width": 1280,
+    "height": 720
+  },
+  "appBundle": false,
+  "agreements": {}
 }

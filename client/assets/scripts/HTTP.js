@@ -1,5 +1,5 @@
 
-var URL = "http://8.217.123.219:9000";
+var URL = "http://jiladahe1997.cn:9000";
 
 exports.master_url = null;
 exports.url = null;
