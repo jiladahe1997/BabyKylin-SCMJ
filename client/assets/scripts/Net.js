@@ -34,13 +34,13 @@ var Global = cc.Class({
         connect:function(fnConnect,fnError) {
             var self = this;
             const { io } = require("socket.io-client");
-            const socket = io("http://8.217.123.219:10000");
+            const socket = io("https://jiladahe1997.cn:10000");
             this.sio = socket;
             this.sio.on('reconnect',function(){
                 console.log('reconnection');
             });
             this.sio.on('connect',function(data){
-                console.log("rmr connect succ http://8.217.123.219:10000")
+                console.log("rmr connect succ https://jiladahe1997.cn:10000")
                 self.sio.connected = true;
                 fnConnect(data);
             });

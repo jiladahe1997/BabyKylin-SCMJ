@@ -1,5 +1,5 @@
 
-var URL = "http://jiladahe1997.cn:9000";
+var URL = "https://jiladahe1997.cn:9000";
 
 exports.master_url = null;
 exports.url = null;
@@ -13,6 +13,7 @@ function init() {
 }
 
 function setURL(url) {
+    console.log("rmr setURL:",url)
     URL = url;
     init();
 };
@@ -46,7 +47,8 @@ function sendRequest(path, data, handler, extraUrl) {
     var requestURL = extraUrl + sendpath + encodeURI(sendtext);
 
     //发送请求
-    console.log("RequestURL:" + requestURL);
+    console.log("rmr extraUrl:" + exports.url);
+    console.log("rmr RequestURL:" + requestURL);
     xhr.open("GET", requestURL, true);
 
     if (cc.sys.isNative) {

@@ -312,8 +312,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 771.11,
-      "height": 170.4
+      "width": 175.57,
+      "height": 90.4
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -364,8 +364,8 @@
     ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_string": "加载中.....\n此版本为体验版本，请在右上角点击三个点 \n开发调试-开启调试后重新进入游戏\n否则无法连接服务器！",
-    "_N$string": "加载中.....\n此版本为体验版本，请在右上角点击三个点 \n开发调试-开启调试后重新进入游戏\n否则无法连接服务器！",
+    "_string": "加载中.....\n",
+    "_N$string": "加载中.....\n",
     "_fontSize": 40,
     "_lineHeight": 40,
     "_enableWrapText": true,

@@ -2,7 +2,7 @@
   "appid": "wx3944f56cbccb86a3",
   "orientation": "landscape",
   "separate_engine": false,
-  "REMOTE_SERVER_ROOT": "http://8.217.123.219:8080",
+  "REMOTE_SERVER_ROOT": "https://jiladahe1997.cn:8080",
   "subContext": "",
   "startSceneAssetBundle": false
 }

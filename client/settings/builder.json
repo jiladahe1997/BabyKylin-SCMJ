@@ -46,7 +46,7 @@
   "xxteaKey": "a56d41f1-8905-45",
   "zipCompressJs": true,
   "mainCompressionType": "default",
-  "mainIsRemote": false,
+  "mainIsRemote": true,
   "nativeMd5Cache": true,
   "android": {
     "packageName": "org.cocos2d.demo",
