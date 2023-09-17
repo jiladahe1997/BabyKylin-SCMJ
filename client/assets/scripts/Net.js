@@ -138,7 +138,7 @@ var Global = cc.Class({
             var fn = function(ret){
                 fnResult(ret.errcode == 0);
             }
-            cc.vv.http.sendRequest("/hi",null,fn,'http://' + this.ip);
+            cc.vv.http.sendRequest("/hi",null,fn,'https://' + this.ip);
         }
     },
 });
