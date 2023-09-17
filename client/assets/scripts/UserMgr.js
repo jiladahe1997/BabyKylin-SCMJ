@@ -19,14 +19,23 @@ cc.Class({
     guestAuth:function(){
         var account = cc.args["account"];
         if(account == null || account == ""){
-            // account = cc.sys.localStorage.getItem("account");
-            account = wx.getStorageSync("account")
+            // 微信小程序环境
+            if (typeof(wx) != 'undefined')
+                account = wx.getStorageSync("account")
+            // 浏览器环境
+            else
+                account = cc.sys.localStorage.getItem("account");
         }
         
         if(account == null || account == ""){
             account = Date.now();
-            //cc.sys.localStorage.setItem("account",account);
-            wx.setStorageSync("account",account);
+            // 微信小程序环境
+            if (typeof(wx) != 'undefined')
+                wx.setStorageSync("account",account);
+            // 浏览器环境
+            else
+                cc.sys.localStorage.setItem("account",account);
+
         }
         
         cc.vv.http.sendRequest("/guest",{account:account},this.onAuth);
