@@ -17,18 +17,18 @@ cc.Class({
         
         bgmAudioID:-1,
     },
-
+    
     // use this for initialization
     init: function () {
-        var t = cc.sys.localStorage.getItem("bgmVolume");
-        if(t != null){
-            this.bgmVolume = parseFloat(t);    
-        }
+        // var t = cc.sys.localStorage.getItem("bgmVolume");
+        // if(t != null){
+        //     this.bgmVolume = parseFloat(t);    
+        // }
         
-        var t = cc.sys.localStorage.getItem("sfxVolume");
-        if(t != null){
-            this.sfxVolume = parseFloat(t);    
-        }
+        // var t = cc.sys.localStorage.getItem("sfxVolume");
+        // if(t != null){
+        //     this.sfxVolume = parseFloat(t);    
+        // }
         
         cc.game.on(cc.game.EVENT_HIDE, function () {
             console.log("cc.audioEngine.pauseAll");
@@ -46,26 +46,35 @@ cc.Class({
     // },
     
     getUrl:function(url){
-        return cc.url.raw("resources/sounds/" + url);
+        return ("sounds/" + url).replace(".mp3", "");
     },
     
     playBGM(url){
         var audioUrl = this.getUrl(url);
-        console.log(audioUrl);
-        if(this.bgmAudioID >= 0){
-            cc.audioEngine.stop(this.bgmAudioID);
-        }
-        this.bgmAudioID = cc.audioEngine.play(audioUrl,true,this.bgmVolume);
+        console.log("playBGM audio:", audioUrl);
+        cc.resources.load(audioUrl, cc.AudioClip, null, (function (err, clip) {
+            console.log("load playBGM audio", err, this.bgmVolume)
+            if(this.bgmAudioID >= 0){
+                cc.audioEngine.stop(this.bgmAudioID);
+            }
+            this.bgmAudioID = cc.audioEngine.play(clip,true,this.bgmVolume);
+        }).bind(this));        
     },
     
     playSFX(url){
         var audioUrl = this.getUrl(url);
-        if(this.sfxVolume > 0){
-            var audioId = cc.audioEngine.play(audioUrl,false,this.sfxVolume);    
-        }
+        console.log("playSFX audio:", audioUrl);
+        debugger
+        cc.resources.load(audioUrl, cc.AudioClip, null, (function (err, clip) {
+            console.log("load playSFX audio", err, this.sfxVolume)
+            if(this.sfxVolume > 0){
+                var audioId = cc.audioEngine.play(clip,false,this.sfxVolume);    
+            }
+        }).bind(this));        
     },
     
     setSFXVolume:function(v){
+        console.log("setSFXVolume:", v)
         if(this.sfxVolume != v){
             cc.sys.localStorage.setItem("sfxVolume",v);
             this.sfxVolume = v;
@@ -73,6 +82,7 @@ cc.Class({
     },
     
     setBGMVolume:function(v,force){
+        console.log("setBGMVolume:", v)
         if(this.bgmAudioID >= 0){
             if(v > 0){
                 cc.audioEngine.resume(this.bgmAudioID);
